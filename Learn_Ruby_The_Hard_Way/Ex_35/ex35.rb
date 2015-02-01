@@ -1,11 +1,14 @@
+def user_input
+  print "> "
+  $stdin.gets.chomp
+end
+
 def gold_room
   puts "This room is full of gold.  How much do you take?"
 
-  print "> "
-  choice = $stdin.gets.chomp
+  choice = user_input
 
-  # this line has a bug, so fix it
-  if choice.inlude?("0") || choice.include?("1")
+  if choice.include?("0") || choice.include?("1")
     how_much = choice.to_i
   else
     dead("Man, learn to type a number.")
@@ -28,8 +31,7 @@ def bear_room
   bear_moved = false
 
   while true
-    print "> "
-    choice = $stdin.gets.chomp
+    choice = user_input
 
     if choice == "take honey"
       dead("The bear looks at you then slaps your face off.")
@@ -52,8 +54,7 @@ def cthulhu_room
   puts "He, it, whatever stares at you and you go insane."
   puts "Do you flee for your life or eat your head?"
 
-  print "> "
-  choice = $stdin.gets.chomp
+  choice = user_input
 
   if choice.include? "flee"
     start
@@ -75,8 +76,7 @@ def start
   puts "There is a door to your right and left."
   puts "Which one do you take?"
 
-  print "> "
-  choice = $stdin.gets.chomp
+  choice = user_input
 
   if choice == "left"
     bear_room
