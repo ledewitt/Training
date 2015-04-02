@@ -1,18 +1,6 @@
 I have these two simple Ruby Classes in this repo.
 
 ``` ruby
-class HashCube
-  def initialize(dimensions)
-    @height = dimensions[:height]
-    @width  = dimensions[:width]
-    @depth  = dimensions[:depth]
-  end
-
-  def volume
-    @height * @width * @depth
-  end
-end
-
 class SimpleCube
   def initialize(height, width, depth)
     @height = height
@@ -24,11 +12,23 @@ class SimpleCube
     @height * @width * @depth
   end
 end
+
+class HashCube
+  def initialize(dimensions)
+    @height = dimensions[:height]
+    @width  = dimensions[:width]
+    @depth  = dimensions[:depth]
+  end
+
+  def volume
+    @height * @width * @depth
+  end
+end
 ```
 
-I believe the Ruby conventions would have me implement the first case up above the class HashCube.  However, this got me to thinking about where does the responsibility lie to make sure that the right key value pairs are present in the hash that is passed in?
+I believe the Ruby conventions would have me implement the second case up above the class HashCube.  However, this got me to thinking about where does the responsibility lie to make sure that the right key value pairs are present in the hash that is passed in?
 
-With the second case the object sending the message to SimpleCube immediate knows if it has or has not send the right information.
+With the first case the object sending the message to SimpleCube immediate knows if it has or has not send the right information.
 
 ``` ruby
 2.1.2 :001 > require './list.rb'
@@ -41,7 +41,7 @@ ArgumentError: wrong number of arguments (2 for 3)
   from /Users/luke/.rvm/rubies/ruby-2.1.2/bin/irb:11:in `<main>'
 ```
 
-With the first case when the object h_cube is in instantiated from the HashCube class below it has no idea that something is wrong until it blows up on the volume method call.
+With the second case when the object h_cube is in instantiated from the HashCube class below it has no idea that something is wrong until it blows up on the volume method call.
 
 ``` ruby
 2.1.2 :003 > require './hash.rb'
