@@ -2,7 +2,7 @@ Testing the Readme at a level lower then the top of repo.
 
 I have these two simple Ruby Classes in this repo.
 
-''' ruby
+``` ruby
 class HashCube
   def initialize(dimensions)
     @height = dimensions[:height]
@@ -26,4 +26,4 @@ class SimpleCube
     @height * @width * @depth
   end
 end
-'''
+```
