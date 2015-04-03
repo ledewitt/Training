@@ -59,3 +59,73 @@ TypeError: nil can't be coerced into Fixnum
 So if passing a Hash of variables is Ruby's convention what is the best way for an object to protect itself from junk or absent data.  Is it the responsibility of the class to check the input or is it the responsibility of the calling class to make sure it is sending the correct data?
 
 I know context of the problem being solved should always be considered.  However, in a general problem space what would be the natural tendency of a Rubyist in handling data validation in a hash that is being passed?
+
+-----
+
+A day later and asking around to some different Rubyists has led me to a couple of other ways to address objects with hashes at initialization.  Many thanks to James Gray for showing me these specific examples.
+
+First is using the fetch method in a hash.  The below code will error out if the hash sent in doesn't have the key values present.
+
+```ruby
+class FetchCube
+  def initialize(dimensions)
+    @height = dimensions.fetch(:height)
+    @width  = dimensions.fetch(:width)
+    @depth  = dimensions.fetch(:depth)
+  end
+
+  def volume
+    @height * @width * @depth
+  end
+end
+```
+
+Here is the irb session to show the behavior.
+
+```ruby
+2.1.2 :019 > incomplete_cube
+ => {:width=>3, :depth=>6}
+2.1.2 :020 > defective_cube = FetchCube.new(incomplete_cube)
+KeyError: key not found: :height
+  from /Users/luke/Work/DeWitt_Software/Training/Interface/fetch.rb:3:in `fetch'
+  from /Users/luke/Work/DeWitt_Software/Training/Interface/fetch.rb:3:in `initialize'
+  from (irb):20:in `new'
+  from (irb):20
+  from /Users/luke/.rvm/rubies/ruby-2.1.2/bin/irb:11:in `<main>'
+2.1.2 :021 > cube
+ => {:height=>4, :width=>2, :depth=>3}
+2.1.2 :022 > f_cube = FetchCube.new(cube)
+ => #<FetchCube:0x007fbda8a81188 @height=4, @width=2, @depth=3>
+2.1.2 :023 > f_cube.volume
+ => 24
+```
+
+I was also shown the following example which became legal with Ruby 2.1.  You can just specify the Key Value Symbol that is contained within the Hash in the initialization of an object.  Which looks neat, clean, and tidy.
+
+```ruby
+class KeyCube
+  def initialize(height:,width:,depth:)
+    @height = height
+    @width  = width
+    @depth  = depth
+  end
+
+  def volume
+    @height * @width * @depth
+  end
+end
+```
+
+Here is this implementation in an irb session.
+
+```ruby
+2.1.2 :024 > k_cube = KeyCube.new(incomplete_cube)
+ArgumentError: missing keyword: height
+  from (irb):24:in `new'
+  from (irb):24
+  from /Users/luke/.rvm/rubies/ruby-2.1.2/bin/irb:11:in `<main>'
+2.1.2 :025 > k_cube = KeyCube.new(cube)
+ => #<KeyCube:0x007fbda8aa3fa8 @height=4, @width=2, @depth=3>
+2.1.2 :026 > k_cube.volume
+ => 24
+```
