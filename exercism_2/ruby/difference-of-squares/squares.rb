@@ -10,21 +10,12 @@ class Squares
   end
   
   def sum_of_squares
-    sum_o_sq = 0
-    number.times do |n|
-      n += 1
-      sum_o_sq += (n**2)
+    (1..number).inject do |a, n|
+      a + n**2
     end
-    sum_o_sq
   end
   
   def square_of_sums
-    sq_o_sum = 0
-    number.times do |n|
-      n += 1
-      sq_o_sum += n
-    end
-    sq_o_sum ** 2
-  end
-  
+    (1..number).inject(:+) ** 2
+  end 
 end
