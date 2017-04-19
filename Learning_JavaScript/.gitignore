@@ -10,3 +10,7 @@ node_modules
 # temporary files
 *.tmp
 *~
+
+# Distribution Files
+dist
+public/dist
