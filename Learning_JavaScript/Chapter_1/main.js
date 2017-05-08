@@ -7,14 +7,14 @@ $ (document).ready(function() {
   var c = Shape.Circle(200, 200, 50);
   c.fillColor = 'green'; */
 
-   /* 64 Circles
+   /* 64 Circles */
    var c;
   for(var x=25; x<400; x+=50) {
     for(var y=25; y<400; y+=50) {
       c = Shape.Circle(x, y, 20);
       c.fillColor = 'green';
     }
-  } */
+  }
 
   /* User Input Circles */
   var tool = new Tool();
